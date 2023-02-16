@@ -1,33 +1,59 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import { Route, Routes, useRoutes } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import Home from './Pages/Home'
+import Booklist from './Booklist'
+import Book from './Pages/Book'
+import Newbook from './Pages/Newbook'
+import NotFound from './Pages/NotFound'
+import Booklayout from './Booklayout'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  let element = useRoutes([
+        {
+          path: "/",
+          element: <Home/>
+        },{
+          path: "*",
+          element: <NotFound/>
+        },{
+          path: "/booklist",
+          element: <Booklist/>
+        },{
+          path: "/books",
+          element: <Book/>
+        }
+      ])
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/books">Books</Link>
+          </li>
+        </ul>
+      </nav>
+      {element}
+      {/* <Routes className="App">
+        <Route path='/' element={<Home />} />
+        <Route path='/books' element={<Booklayout/>}>
+          <Route index element={<Booklist/>}/>
+          <Route path=':id' element={<Book/>}/>
+          <Route path='new' element={<Newbook/>}/>
+        </Route>
+        {/* <Route path='/books' element={<Booklist />} />
+        <Route path='/books/:id' element={<Book />} />
+        <Route path='/books/new' element={<Newbook/>}/> */}
+        {/* <Route path='*' element={<NotFound/>}/>
+      </Routes> */} 
+    </>
   )
 }
 
